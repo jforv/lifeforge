@@ -3,7 +3,12 @@
 # ============================================
 # Builder stage - build core server bundle only
 # ============================================
-FROM oven/bun:alpine AS builder
+# FROM oven/bun:alpine AS builder
+# To this:
+FROM node:24-alpine AS builder
+
+# Enable pnpm
+RUN corepack enable pnpm
 
 RUN apk update && apk add git
 

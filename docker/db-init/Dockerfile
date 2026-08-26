@@ -8,7 +8,12 @@ FROM ghcr.io/muchobien/pocketbase:latest AS pocketbase
 # ============================================
 # Builder stage - build forge CLI
 # ============================================
-FROM oven/bun:alpine AS builder
+# FROM oven/node:alpine AS builder
+# To this:
+FROM node:24-alpine AS builder
+
+# Enable pnpm
+RUN corepack enable pnpm
 
 WORKDIR /app
 

@@ -3,7 +3,12 @@
 # ============================================
 # Builder stage - build client and tools
 # ============================================
-FROM oven/bun:alpine AS builder
+# FROM oven/bun:alpine AS builder
+# To this:
+FROM node:24-alpine AS builder
+
+# Enable pnpm
+RUN corepack enable pnpm
 
 # Accept build arg for API host
 ARG VITE_API_HOST=/api
