@@ -21,6 +21,10 @@
     "./locales/*",
     "./tools"
   ],
+  "overrides": {
+    "@types/express": "4.17.25",
+    "@types/express-serve-static-core": "4.19.6"
+  },
   "scripts": {
     "forge": "tsx --tsconfig=./tools/tsconfig.json tools/src/index.ts",
     "build": "turbo build --filter=\"./packages/*\" && turbo build --continue",
