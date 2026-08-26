@@ -437,7 +437,7 @@ The barrel file at `apps/api/src/core/functions/database/index.ts` is removed en
 
 ### Step 5: Verify
 
-1. Run `pnpm install` to resolve workspace dependencies
+1. Run `bun install` to resolve workspace dependencies
 2. Run TypeScript build across all packages
 3. Smoke test `apps/api` startup
 4. Test a few module endpoints

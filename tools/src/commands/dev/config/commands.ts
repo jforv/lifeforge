@@ -38,7 +38,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
 
       if (!fs.existsSync(PB_BINARY_PATH)) {
         logger.error(
-          `PocketBase binary does not exist: ${chalk.blue(PB_BINARY_PATH)}. Please run "pnpm forge db init" to initialize the database.`
+          `PocketBase binary does not exist: ${chalk.blue(PB_BINARY_PATH)}. Please run "bun forge db init" to initialize the database.`
         )
         process.exit(1)
       }
@@ -62,7 +62,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
         process.exit(1)
       }
 
-      return 'pnpm run dev'
+      return 'bun run dev'
     },
     cwd: 'apps/api'
   },
@@ -70,7 +70,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
     command: () => {
       killExistingProcess('vite.*docs')
 
-      return 'pnpm run dev'
+      return 'bun run dev'
     },
     cwd: 'docs'
   },
@@ -79,10 +79,10 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
       killExistingProcess('vite.*apps/web')
 
       if (!fs.existsSync('packages/ui/dist')) {
-        executeCommand('pnpm forge build ui')
+        executeCommand('bun forge build ui')
       }
 
-      return 'pnpm run dev'
+      return 'bun run dev'
     },
     cwd: 'apps/web'
   },
@@ -90,7 +90,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
     command: () => {
       killExistingProcess('storybook.*packages/ui')
 
-      return 'pnpm run dev'
+      return 'bun run dev'
     },
     cwd: 'packages/ui'
   }

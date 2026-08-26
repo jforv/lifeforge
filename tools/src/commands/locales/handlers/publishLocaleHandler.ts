@@ -36,7 +36,7 @@ export async function publishLocaleHandler(langCode: string): Promise<void> {
   logger.info(`Publishing ${chalk.blue(fullName)}...`)
 
   try {
-    executeCommand(`pnpm publish --registry ${getRegistryUrl()}`, {
+    executeCommand(`bun publish --registry ${getRegistryUrl()}`, {
       cwd: targetDir
     })
 

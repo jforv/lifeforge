@@ -60,7 +60,7 @@ export async function startSingleService(
   if (service in PROJECTS) {
     const projectPath = PROJECTS[service as keyof typeof PROJECTS]
 
-    executeCommand('pnpm run dev', { cwd: projectPath }, extraArgs)
+    executeCommand('bun run dev', { cwd: projectPath }, extraArgs)
 
     return
   }

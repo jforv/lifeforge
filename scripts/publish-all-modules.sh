@@ -26,7 +26,7 @@ for module_dir in "$MODULES_DIR"/*/; do
   fi
   
   echo "🚀 Publishing: $module_name"
-  pnpm forge modules publish "$module_name" $OFFICIAL_FLAG
+  bun forge modules publish "$module_name" $OFFICIAL_FLAG
   
   if [[ $? -eq 0 ]]; then
     echo "✅ $module_name published successfully"

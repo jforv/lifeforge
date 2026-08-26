@@ -19,7 +19,7 @@ import { findPackageName, removeDependency } from '@/utils/packageJson'
  * 4. Removes from package.json dependencies
  *
  * After uninstallation:
- * - Runs pnpm install to clean up
+ * - Runs bun install to clean up
  * - Regenerates route and schema registries
  */
 export async function uninstallModuleHandler(

@@ -36,7 +36,7 @@ export async function initAuthTests(): Promise<{
 
   if (!serverAlive) {
     throw new Error(
-      'Cannot connect to API server at http://localhost:3636. Start with: cd apps/api && pnpmdev'
+      'Cannot connect to API server at http://localhost:3636. Start with: cd apps/api && bun dev'
     )
   }
 
