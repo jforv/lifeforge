@@ -19,7 +19,7 @@ COPY . .
 
 # Install dependencies
 RUN --mount=type=cache,target=/root/.bun/install/cache \
-    pnpm install --linker isolated
+    pnpm install
 
 # Build shared package
 RUN cd /lifeforge/shared && pnpm run build

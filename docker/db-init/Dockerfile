@@ -22,7 +22,7 @@ COPY . .
 
 # Install dependencies
 RUN --mount=type=cache,target=/root/.bun/install/cache \
-    pnpm install --linker isolated
+    pnpm install
 
 # Build @lifeforge/log (required by tools)
 RUN cd /app/packages/log && pnpm run build

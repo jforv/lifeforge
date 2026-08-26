@@ -21,7 +21,7 @@ COPY . .
 
 # Install dependencies
 RUN --mount=type=cache,target=/root/.bun/install/cache \
-    pnpm install --linker isolated
+    pnpm install
 
 # Build @lifeforge/log (required by forge CLI used in prebuild)
 RUN cd /app/packages/log && pnpm run build
