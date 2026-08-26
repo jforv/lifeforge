@@ -3,12 +3,10 @@
 # ============================================
 # Builder stage - build client and tools
 # ============================================
-# FROM oven/bun:alpine AS builder
-# To this:
-FROM node:24-alpine AS builder
+FROM oven/bun:alpine AS builder
 
-# Enable pnpm
-RUN corepack enable pnpm
+# Enable bun
+# RUN corepack enable bun
 
 # Accept build arg for API host
 ARG VITE_API_HOST=/api
@@ -21,19 +19,19 @@ COPY . .
 
 # Install dependencies
 RUN --mount=type=cache,target=/root/.bun/install/cache \
-    pnpm install
+    bun install
 
 # Build @lifeforge/log (required by forge CLI used in prebuild)
-RUN cd /app/packages/log && pnpm run build
+RUN cd /app/packages/log && bun run build
 
 # Build shared package (required by server types)
-RUN cd /app/shared && pnpm run build
+RUN cd /app/shared && bun run build
 
 # Build @lifeforge/server-utils (required by server types)
-RUN cd /app/packages/server-utils && pnpm run build
+RUN cd /app/packages/server-utils && bun run build
 
 # Build client
-RUN cd /app/apps/web && pnpm run build
+RUN cd /app/apps/web && bun run build
 
 # ============================================
 # Production stage - Nginx static server

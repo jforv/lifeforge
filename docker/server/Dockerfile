@@ -5,10 +5,10 @@
 # ============================================
 # FROM oven/bun:alpine AS builder
 # To this:
-FROM node:24-alpine AS builder
+FROM oven/bun:alpine AS builder
 
-# Enable pnpm
-RUN corepack enable pnpm
+# Enable bun
+# RUN corepack enable bun
 
 RUN apk update && apk add git
 
@@ -19,22 +19,22 @@ COPY . .
 
 # Install dependencies
 RUN --mount=type=cache,target=/root/.bun/install/cache \
-    pnpm install
+    bun install
 
 # Build shared package
-RUN cd /lifeforge/shared && pnpm run build
+RUN cd /lifeforge/shared && bun run build
 
 # Build @lifeforge/log package
-RUN cd /lifeforge/packages/log && pnpm run build
+RUN cd /lifeforge/packages/log && bun run build
 
 # Build lifeforge-server-utils package
-RUN cd /lifeforge/packages/server-utils && pnpm run build
+RUN cd /lifeforge/packages/server-utils && bun run build
 
 # Build server bundle
-RUN cd /lifeforge/apps/api && pnpm run build
+RUN cd /lifeforge/apps/api && bun run build
 
 # Create cleaned package.json without workspace deps for production install
-RUN pnpm -e "const pkg = require('./apps/api/package.json'); \
+RUN bun -e "const pkg = require('./apps/api/package.json'); \
     delete pkg.dependencies.shared; \
     delete pkg.dependencies['@lifeforge/log']; \
     delete pkg.dependencies['@lifeforge/server-utils']; \
@@ -68,7 +68,7 @@ COPY --from=builder /lifeforge/packages/server-utils/package.json ./packages/ser
 
 # Install server dependencies
 COPY --from=builder /lifeforge/apps/api/package.docker.json ./package.json
-RUN pnpm install --production
+RUN bun install --production
 
 # Create apps directory for module mounting
 RUN mkdir -p /lifeforge/modules

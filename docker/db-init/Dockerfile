@@ -10,10 +10,10 @@ FROM ghcr.io/muchobien/pocketbase:latest AS pocketbase
 # ============================================
 # FROM oven/node:alpine AS builder
 # To this:
-FROM node:24-alpine AS builder
+FROM oven/bun:alpine AS builder
 
-# Enable pnpm
-RUN corepack enable pnpm
+# Enable bun
+# RUN corepack enable bun
 
 WORKDIR /app
 
@@ -22,16 +22,16 @@ COPY . .
 
 # Install dependencies
 RUN --mount=type=cache,target=/root/.bun/install/cache \
-    pnpm install
+    bun install
 
 # Build @lifeforge/log (required by tools)
-RUN cd /app/packages/log && pnpm run build
+RUN cd /app/packages/log && bun run build
 
 # Build @lifeforge/server-utils (required by schema files)
-RUN cd /app/packages/server-utils && pnpm run build
+RUN cd /app/packages/server-utils && bun run build
 
 # Build forge CLI
-RUN cd /app/tools && pnpm run build
+RUN cd /app/tools && bun run build
 
 # Collect only schema files to staging directory
 RUN mkdir -p /schemas && \
@@ -67,7 +67,7 @@ RUN mkdir -p node_modules/@lifeforge && \
     ln -sf /app/packages/server-utils node_modules/@lifeforge/server-utils
 
 # Install minimal dependencies for schema evaluation
-RUN echo '{"dependencies":{"zod":"^4.0.0"}}' > package.json && pnpm install
+RUN echo '{"dependencies":{"zod":"^4.0.0"}}' > package.json && bun install
 
 # Set environment for Docker mode
 ENV DOCKER_MODE=true
