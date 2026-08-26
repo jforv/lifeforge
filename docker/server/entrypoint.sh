@@ -11,9 +11,6 @@ echo "PocketBase is ready!"
 # Create symlinks for externalized dependencies
 mkdir -p /lifeforge/node_modules/@lifeforge
 
-# Symlink shared package
-ln -sf /lifeforge/shared /lifeforge/node_modules/shared
-
 # Symlink @lifeforge/log (required by server-utils)
 ln -sf /lifeforge/packages/log /lifeforge/node_modules/@lifeforge/log
 

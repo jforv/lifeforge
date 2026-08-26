@@ -21,9 +21,6 @@ COPY . .
 RUN --mount=type=cache,target=/root/.bun/install/cache \
     bun install
 
-# Build shared package
-RUN cd /lifeforge/shared && bun run build
-
 # Build @lifeforge/log package
 RUN cd /lifeforge/packages/log && bun run build
 
@@ -35,7 +32,6 @@ RUN cd /lifeforge/apps/api && bun run build
 
 # Create cleaned package.json without workspace deps for production install
 RUN bun -e "const pkg = require('./apps/api/package.json'); \
-    delete pkg.dependencies.shared; \
     delete pkg.dependencies['@lifeforge/log']; \
     delete pkg.dependencies['@lifeforge/server-utils']; \
     delete pkg.devDependencies; \
@@ -53,10 +49,6 @@ WORKDIR /lifeforge
 
 # Copy bundled server
 COPY --from=builder /lifeforge/apps/api/dist ./apps/api/dist
-
-# Copy shared package
-COPY --from=builder /lifeforge/shared/dist ./shared/dist
-COPY --from=builder /lifeforge/shared/package.json ./shared/package.json
 
 # Copy @lifeforge/log package
 COPY --from=builder /lifeforge/packages/log/dist ./packages/log/dist
