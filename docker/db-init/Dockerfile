@@ -72,7 +72,7 @@ RUN mkdir -p node_modules/@lifeforge && \
     ln -sf /app/packages/server-utils node_modules/@lifeforge/server-utils
 
 # Install minimal dependencies for schema evaluation
-RUN echo '{"dependencies":{"zod":"4.3.5", "dotenv": "17.4.2", "chalk":"5.0.0"}}' > package.json && bun install
+RUN echo '{"dependencies":{"zod":"4.3.5", "dotenv": "17.4.2", "chalk":"5.0.0", "commander":"14.0.2", "prompts": "2.4.2", "fs-extra": "11.2.0" }}' > package.json && bun install
 
 # Set environment for Docker mode
 ENV DOCKER_MODE=true
