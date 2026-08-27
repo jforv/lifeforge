@@ -25,7 +25,7 @@ RUN --mount=type=cache,target=/root/.bun/install/cache \
 RUN cd /app/packages/log && bun run build
 
 # Build shared package (required by server types)
-RUN cd /app/shared && bun run build
+# RUN cd /app/shared && bun run build
 
 # Build @lifeforge/server-utils (required by server types)
 RUN cd /app/packages/server-utils && bun run build
