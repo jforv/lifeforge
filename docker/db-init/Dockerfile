@@ -35,7 +35,10 @@ RUN cd /app/tools && bun run build
 
 # Collect only schema files to staging directory
 RUN mkdir -p /schemas && \
-    find /app/server/src/lib -name "schema.ts" -exec sh -c 'mkdir -p /schemas/$(dirname ${1#/app/}) && cp "$1" /schemas/$(dirname ${1#/app/})/' _ {} \;
+    find /app/apps/api/src/lib -name "schema.ts" -exec sh -c 'mkdir -p /schemas/$(dirname ${1#/app/}) && cp "$1" /schemas/$(dirname ${1#/app/})/' _ {} \;
+# Collect only schema files to staging directory
+# RUN mkdir -p /schemas && \
+    # find /app/server/src/lib -name "schema.ts" -exec sh -c 'mkdir -p /schemas/$(dirname ${1#/app/}) && cp "$1" /schemas/$(dirname ${1#/app/})/' _ {} \;
 
 # ============================================
 # Production stage - minimal runtime
@@ -51,7 +54,9 @@ WORKDIR /app
 COPY --from=builder /app/tools/dist/forge.js ./forge.js
 
 # Copy server schema files needed for migration generation
-COPY --from=builder /schemas/server/src/lib ./server/src/lib
+# COPY --from=builder /schemas/server/src/lib ./server/src/lib
+COPY --from=builder /schemas/apps/api/src/lib ./apps/api/src/lib
+
 
 # Copy shared package (built) for schema imports
 # COPY --from=builder /app/shared/dist ./shared/dist
