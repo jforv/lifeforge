@@ -66,10 +66,20 @@ COPY --from=builder /schemas/apps/api/src/lib ./apps/api/src/lib
 COPY --from=builder /app/packages/server-utils/dist ./packages/server-utils/dist
 COPY --from=builder /app/packages/server-utils/package.json ./packages/server-utils/package.json
 
+# Copy @lifeforge/log (required by the bundled forge CLI)
+COPY --from=builder /app/packages/log/dist ./packages/log/dist
+COPY --from=builder /app/packages/log/package.json ./packages/log/package.json
+
+# Copy @lifeforge/pocketbase (required by schema files)
+COPY --from=builder /app/packages/pocketbase/dist ./packages/pocketbase/dist
+COPY --from=builder /app/packages/pocketbase/package.json ./packages/pocketbase/package.json
+
 # Create node_modules symlinks for package resolution
 RUN mkdir -p node_modules/@lifeforge && \
     # ln -sf /app/shared node_modules/shared && \
-    ln -sf /app/packages/server-utils node_modules/@lifeforge/server-utils
+    ln -sf /app/packages/server-utils node_modules/@lifeforge/server-utils && \
+    ln -sf /app/packages/log node_modules/@lifeforge/log && \
+    ln -sf /app/packages/pocketbase node_modules/@lifeforge/pocketbase
 
 # Install minimal dependencies for schema evaluation
 # Install dependencies for schema evaluation and CLI execution
@@ -101,7 +111,10 @@ cat > package.json <<'JSON'
         "pdf2pic": "3.1.4",
         "socket.io": "4.8.3",
         "tesseract.js": "6.0.1",
-        "uuid": "13.0.2"
+        "uuid": "13.0.2",
+        "pino": "9.6.0",
+        "pino-pretty": "13.0.0",
+        "rotating-file-stream": "3.2.7"
     },
     "devDependencies": {
         "@eslint/js": "10.0.1",

@@ -31,7 +31,7 @@ export async function generateMigrationsHandler(
 
     killPB?.()
 
-    logger.success(
+    logger.info(
       `Migrations generated successfully for module ${chalk.green(targetModule ? `${targetModule}` : 'all modules')}`
     )
   } catch (error) {
@@ -41,6 +41,6 @@ export async function generateMigrationsHandler(
     logger.debug(`Error details: ${error}`)
 
     killPB?.()
-    process.exit(1)
+    process.exitCode = 1
   }
 }
