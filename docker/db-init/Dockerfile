@@ -73,7 +73,7 @@ RUN mkdir -p node_modules/@lifeforge && \
 
 # Install minimal dependencies for schema evaluation
 # Install dependencies for schema evaluation and CLI execution
-RUN echo '{"dependencies":{"zod":"^4.3.5", "dotenv":"17.4.2", "chalk":"5.6.2", "pocketbase":"0.27.3", "lodash":"4.18.1", "dayjs":"1.11.23", "argon2":"0.44.0", "commander":"14.0.2", "prompts":"2.4.2", "fs-extra":"11.2.0", "prettier":"3.7.4", "concurrently":"10.0.4"}}' > package.json && bun install
+RUN echo '{"dependencies":{"zod":"^4.3.5", "dotenv":"17.4.2", "chalk":"5.6.2", "pocketbase":"0.27.3", "lodash":"4.18.1", "dayjs":"1.11.23", "argon2":"0.44.0", "commander":"14.0.2", "prompts":"2.4.2", "fs-extra":"11.2.0", "prettier":"3.7.4", "concurrently":"10.0.4", "semver":"7.7.3"}}' > package.json && bun install
 
 # Set environment for Docker mode
 ENV DOCKER_MODE=true
