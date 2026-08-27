@@ -25,7 +25,7 @@ migration_log_file="/tmp/lifeforge-migration.log.$$"
 trap 'rm -f "$migration_status_file" "${migration_status_file}.tmp" "$migration_log_file"' EXIT
 
 (
-    if bun forge --log-level debug db push >"$migration_log_file" 2>&1; then
+    if bun ./forge.js --log-level debug db push >"$migration_log_file" 2>&1; then
 		migration_status=0
 	else
 		migration_status=$?
