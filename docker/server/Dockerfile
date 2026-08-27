@@ -31,11 +31,19 @@ RUN cd /lifeforge/packages/server-utils && bun run build
 RUN cd /lifeforge/apps/api && bun run build
 
 # Create cleaned package.json without workspace deps for production install
-RUN bun -e "const pkg = require('./apps/api/package.json'); \
-    delete pkg.dependencies['@lifeforge/log']; \
-    delete pkg.dependencies['@lifeforge/server-utils']; \
+# RUN bun -e "const pkg = require('./apps/api/package.json'); \
+#     delete pkg.dependencies['@lifeforge/log']; \
+#     delete pkg.dependencies['@lifeforge/server-utils']; \
+#     delete pkg.devDependencies; \
+#     require('fs').writeFileSync('./apps/api/package.docker.json', JSON.stringify(pkg, null, 2))"
+# Create cleaned package.json without workspace deps for production install
+RUN bun -e "const fs = require('fs'); \
+    const pkg = require('./apps/api/package.json'); \
+    Object.keys(pkg.dependencies || {}).forEach(k => { \
+    if (pkg.dependencies[k].startsWith('workspace:')) delete pkg.dependencies[k]; \
+    }); \
     delete pkg.devDependencies; \
-    require('fs').writeFileSync('./apps/api/package.docker.json', JSON.stringify(pkg, null, 2))"
+    fs.writeFileSync('./apps/api/package.docker.json', JSON.stringify(pkg, null, 2));"
 
 # ============================================
 # Production stage - core server only (no modules)
