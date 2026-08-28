@@ -42,6 +42,14 @@ RUN bun -e "const fs = require('fs'); \
     Object.keys(pkg.dependencies || {}).forEach(k => { \
     if (pkg.dependencies[k].startsWith('workspace:')) delete pkg.dependencies[k]; \
     }); \
+    Object.assign(pkg.dependencies, { \
+    'pino': '9.6.0', \
+    'pino-pretty': '13.0.0', \
+    'rotating-file-stream': '3.2.7', \
+    'zod': '4.3.5', \
+    'lodash': '4.17.21', \
+    'dayjs': '1.11.19' \
+    }); \
     delete pkg.devDependencies; \
     fs.writeFileSync('./apps/api/package.docker.json', JSON.stringify(pkg, null, 2));"
 
@@ -66,6 +74,14 @@ COPY --from=builder /lifeforge/packages/log/package.json ./packages/log/package.
 COPY --from=builder /lifeforge/packages/server-utils/dist ./packages/server-utils/dist
 COPY --from=builder /lifeforge/packages/server-utils/package.json ./packages/server-utils/package.json
 
+# Copy @lifeforge/pocketbase package (required by the server bundle)
+COPY --from=builder /lifeforge/packages/pocketbase/dist ./packages/pocketbase/dist
+COPY --from=builder /lifeforge/packages/pocketbase/package.json ./packages/pocketbase/package.json
+
+# Copy @lifeforge/configs package (required by module routes)
+COPY --from=builder /lifeforge/packages/configs/dist ./packages/configs/dist
+COPY --from=builder /lifeforge/packages/configs/package.json ./packages/configs/package.json
+
 # Install server dependencies
 COPY --from=builder /lifeforge/apps/api/package.docker.json ./package.json
 RUN bun install --production
@@ -87,5 +103,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
 # Modules should be mounted to /lifeforge/modules at runtime:
 #   docker run -v /path/to/modules:/lifeforge/modules lifeforge-server
 ENTRYPOINT ["/entrypoint.sh"]
-
 

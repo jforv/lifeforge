@@ -17,6 +17,12 @@ ln -sf /lifeforge/packages/log /lifeforge/node_modules/@lifeforge/log
 # Symlink @lifeforge/server-utils (required by module bundles)
 ln -sf /lifeforge/packages/server-utils /lifeforge/node_modules/@lifeforge/server-utils
 
+# Symlink @lifeforge/pocketbase (required by the server bundle)
+ln -sf /lifeforge/packages/pocketbase /lifeforge/node_modules/@lifeforge/pocketbase
+
+# Symlink @lifeforge/configs (required by module routes)
+ln -sf /lifeforge/packages/configs /lifeforge/node_modules/@lifeforge/configs
+
 # Check if modules are mounted
 if [ -d "/lifeforge/modules" ] && [ "$(ls -A /lifeforge/modules 2>/dev/null)" ]; then
     module_count=$(ls -d /lifeforge/modules/*/ 2>/dev/null | wc -l | tr -d ' ')
