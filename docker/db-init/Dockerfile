@@ -53,6 +53,9 @@ WORKDIR /app
 # Copy ONLY bundled forge CLI (no node_modules!)
 COPY --from=builder /app/tools/dist/forge.js ./forge.js
 
+# Bundle built-in language packs instead of relying on a runtime bind mount.
+COPY --from=builder /app/locales ./locales
+
 # Copy server schema files needed for migration generation
 # COPY --from=builder /schemas/server/src/lib ./server/src/lib
 COPY --from=builder /schemas/apps/api/src/lib ./apps/api/src/lib

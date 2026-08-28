@@ -37,7 +37,6 @@ services:
     volumes:
       - ./database/pb_data:/pb_data
       - ./modules:/app/modules
-      - ./locales:/app/locales
     depends_on:
       db:
         condition: service_healthy
@@ -58,7 +57,6 @@ services:
       - '3636'
     volumes:
       - ./modules:/lifeforge/modules
-      - ./locales:/lifeforge/locales
     depends_on:
       db-init:
         condition: service_completed_successfully

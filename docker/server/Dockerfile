@@ -66,6 +66,9 @@ WORKDIR /lifeforge
 # Copy bundled server
 COPY --from=builder /lifeforge/apps/api/dist ./apps/api/dist
 
+# Bundle built-in language packs instead of relying on a runtime bind mount.
+COPY --from=builder /lifeforge/locales ./locales
+
 # Copy @lifeforge/log package
 COPY --from=builder /lifeforge/packages/log/dist ./packages/log/dist
 COPY --from=builder /lifeforge/packages/log/package.json ./packages/log/package.json
@@ -103,4 +106,3 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
 # Modules should be mounted to /lifeforge/modules at runtime:
 #   docker run -v /path/to/modules:/lifeforge/modules lifeforge-server
 ENTRYPOINT ["/entrypoint.sh"]
-
